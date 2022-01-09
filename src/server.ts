@@ -1,23 +1,18 @@
 import express from 'express'
-import { PrismaClient } from '@prisma/client'
+import router from './router'
 
-const prisma = new PrismaClient()
-async function main() {
-  const result = await prisma.courses.create({
-    data: {
-      duration: 200,
-      name: 'Curso de NodeJS',
-      description: 'description',
-    },
-  })
+const PORT = process.env.PORT || 8088
 
-  console.log('result', result)
-}
-main()
 const app = express()
+app.use(express.json())
+
+const initializeRouter = async () => router(app)
+initializeRouter()
 
 app.get('/', (req, res) => {
-  return res.send('alo')
+  return res.send('Express boilerplate by Diego Vinicius')
 })
 
-app.listen(3333)
+export const server = app.listen(PORT, () =>
+  console.log('Server listening on port ' + PORT)
+)
