@@ -70,7 +70,6 @@ This boilerplate has some pre configurated modules:
 - Response
 ```sh
 {
-    
     "auth": true,
     "token": "{jwt-token}"
 }
