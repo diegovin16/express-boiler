@@ -2,6 +2,13 @@ import request from 'supertest'
 import { server } from '../../server'
 
 const BASE_URL = '/user'
+interface Person {
+  id: string
+  token: string
+  password: string
+  email: string
+  name: string
+}
 
 const mockUser = {
   email: 'test@example.com',
@@ -15,7 +22,7 @@ describe('Test Auth', () => {
     server?.close()
   })
 
-  let data
+  let data: Person
 
   it('should register user', async () => {
     const result = await request(server)

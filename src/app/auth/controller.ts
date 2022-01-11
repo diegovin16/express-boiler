@@ -13,7 +13,7 @@ export default class AuthController {
         return res.status(400).send(AuthError.EMAIL_ALREADY_EXISTS)
       }
       return res.json(person)
-    } catch (err) {
+    } catch (err: any) {
       return res.status(500).send(err.message)
     }
   }
@@ -23,7 +23,7 @@ export default class AuthController {
     try {
       const result = await AuthService.login({ email, password })
       return res.json(result)
-    } catch (err) {
+    } catch (err: any) {
       return res.status(400).send(err.message)
     }
   }
@@ -32,7 +32,7 @@ export default class AuthController {
     try {
       await AuthService.remove(req.params.id)
       return res.status(204).send()
-    } catch (err) {
+    } catch (err: any) {
       return res.status(400).send(err.message)
     }
   }

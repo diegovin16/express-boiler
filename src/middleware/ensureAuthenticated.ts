@@ -20,14 +20,14 @@ export async function ensureAuthenticated(
 ) {
   const authHeader = req.headers.authorization
 
-  if (!authHeader) {
-    throw new Error(AuthError.TOKEN_MISSING)
-  }
-
-  const [, token] = authHeader.split(' ')
-
   try {
-    const decoded = verify(token, process.env.SECRET_KEY) as Payload
+    if (!authHeader) {
+      throw new Error(AuthError.TOKEN_MISSING)
+    }
+
+    const [, token] = authHeader.split(' ')
+
+    const decoded = verify(token, process.env.SECRET_KEY as string) as Payload
     if (!decoded) {
       throw new Error(AuthError.INVALID_TOKEN)
     }
@@ -40,7 +40,7 @@ export async function ensureAuthenticated(
     }
 
     return next()
-  } catch (err) {
+  } catch (err: any) {
     return res.status(500).send(err.message)
   }
 }
